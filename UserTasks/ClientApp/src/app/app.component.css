@@ -1,0 +1,56 @@
+@media (max-width: 767px) {
+  /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+  .body-content {
+    padding-top: 50px;
+  }
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+}
+
+.material-icons {
+  margin-right: 8px;
+  color: white;
+}
+
+.brand-logo {
+  font-size: 1.6em
+}
+
+.page-footer {
+  padding-top: 0;
+}
+
+@media (min-width: 1024px) {
+  .nav-wrapper {
+    margin-left: 306px;
+  }
+
+  .pdn10 {
+    padding-left: 60px;
+  }
+
+  .row .col.l9 {
+    padding-left: 326px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .brand-logo {
+    font-size: 1em
+  }
+}
+
+
+@media only screen and (min-width: 601px) {
+  .row .col.m8 {
+    width: 100% !important;
+  }
+}

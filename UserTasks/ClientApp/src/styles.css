@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+  .nav-wrapper {
+    margin-left: 306px;
+  }
+  .page-footer {
+    margin-top: 0;
+    margin-left: 94px;
+  }
+
+  .material-icons {
+    margin-right: auto;
+    color: white;
+  }
+}
