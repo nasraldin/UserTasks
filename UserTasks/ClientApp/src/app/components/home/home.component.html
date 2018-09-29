@@ -1,0 +1,25 @@
+<p *ngIf="!taskItems"><em>Tasks is loading...</em></p>
+
+<table class='table' *ngIf="taskItems">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Task</th>
+      <th>isDone</th>
+      <th>User OwnerId</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of taskItems">
+      <td>{{ task.id }}</td>
+      <td>{{ task.task }}</td>
+      <td>{{ task.isDone }}</td>
+      <td>{{ task.userOwnerId }}</td>
+      <td>
+        <a [routerLink]="" (click)="getTask(task.id)">Delete</a>
+        <!--<a [routerLink]="['/employee/edit/', task.id]">Edit</a> |
+        <a [routerLink]="" (click)="delete(task.id)">Delete</a>-->
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -13,14 +13,61 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.0.100" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="OpenIddict" Version="2.0.0-rc3-final" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="2.0.0-rc3-final" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\models\login-response.model.ts" />
+    <None Remove="ClientApp\src\app\models\permission.model.ts" />
+    <None Remove="ClientApp\src\app\models\role.model.ts" />
+    <None Remove="ClientApp\src\app\models\user-login.model.ts" />
+    <None Remove="ClientApp\src\app\models\user.model.ts" />
+    <None Remove="ClientApp\src\app\services\account-endpoint.service.ts" />
+    <None Remove="ClientApp\src\app\services\account.service.ts" />
+    <None Remove="ClientApp\src\app\services\auth-guard.service.ts" />
+    <None Remove="ClientApp\src\app\services\auth.service.ts" />
+    <None Remove="ClientApp\src\app\services\can-deactivate-guard.service.ts" />
+    <None Remove="ClientApp\src\app\services\configuration.service.ts" />
+    <None Remove="ClientApp\src\app\services\db-keys.ts" />
+    <None Remove="ClientApp\src\app\services\endpoint-factory.service.ts" />
+    <None Remove="ClientApp\src\app\services\jwt-helper.ts" />
+    <None Remove="ClientApp\src\app\services\local-store-manager.service.ts" />
+    <None Remove="ClientApp\src\app\services\utilities.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserTasks.Core\UserTasks.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\login-response.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\permission.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\role.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user-login.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\user.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\account-endpoint.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\account.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\auth-guard.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\auth.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\can-deactivate-guard.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\configuration.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\db-keys.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\endpoint-factory.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\jwt-helper.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\local-store-manager.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\utilities.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

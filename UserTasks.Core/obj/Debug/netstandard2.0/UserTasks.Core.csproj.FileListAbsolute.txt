@@ -1,0 +1,9 @@
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\bin\Debug\netstandard2.0\UserTasks.Core.deps.json
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\bin\Debug\netstandard2.0\UserTasks.Core.dll
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\bin\Debug\netstandard2.0\UserTasks.Core.pdb
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\obj\Debug\netstandard2.0\UserTasks.Core.csproj.CoreCompileInputs.cache
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\obj\Debug\netstandard2.0\UserTasks.Core.AssemblyInfoInputs.cache
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\obj\Debug\netstandard2.0\UserTasks.Core.AssemblyInfo.cs
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\obj\Debug\netstandard2.0\UserTasks.Core.dll
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\obj\Debug\netstandard2.0\UserTasks.Core.pdb
+C:\Users\Nasr\source\repos\UserTasks\UserTasks.Core\obj\Debug\netstandard2.0\UserTasks.Core.csprojAssemblyReference.cache
