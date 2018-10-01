@@ -44,7 +44,6 @@ import { HomeComponent } from "./components/home/home.component";
 import { AboutComponent } from "./components/about/about.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
 
-import { TodoDemoComponent } from "./components/controls/todo-demo.component";
 import { NotificationsViewerComponent } from "./components/controls/notifications-viewer.component";
 import { SearchBoxComponent } from "./components/controls/search-box.component";
 
@@ -83,7 +82,6 @@ import { TasksComponent } from "./components/tasks/tasks.component";
     NotFoundComponent,
     NotificationsViewerComponent,
     SearchBoxComponent,
-    TodoDemoComponent,
     EqualValidator,
     LastElementDirective,
     AutofocusDirective,

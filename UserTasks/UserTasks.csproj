@@ -29,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\components\controls\todo-demo.component.css" />
+    <None Remove="ClientApp\src\app\components\controls\todo-demo.component.css" />
+    <None Remove="ClientApp\src\app\components\controls\todo-demo.component.html" />
+    <None Remove="ClientApp\src\app\components\controls\todo-demo.component.html" />
+    <None Remove="ClientApp\src\app\components\controls\todo-demo.component.ts" />
+    <None Remove="ClientApp\src\app\components\controls\todo-demo.component.ts" />
     <None Remove="ClientApp\src\app\models\login-response.model.ts" />
     <None Remove="ClientApp\src\app\models\permission.model.ts" />
     <None Remove="ClientApp\src\app\models\role.model.ts" />
