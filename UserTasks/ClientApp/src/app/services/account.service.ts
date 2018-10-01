@@ -140,20 +140,20 @@ export class AccountService {
   }
 
 
-  updateRole(role: Role) {
-    if (role.id) {
-      return this.accountEndpoint.getUpdateRoleEndpoint(role, role.id).pipe(
-        tap(data => this.onRolesChanged([role], AccountService.roleModifiedOperation)));
-    }
-    else {
-      return this.accountEndpoint.getRoleByRoleNameEndpoint<Role>(role.name).pipe<Role>(
-        mergeMap(foundRole => {
-          role.id = foundRole.id;
-          return this.accountEndpoint.getUpdateRoleEndpoint(role, role.id);
-        }),
-        tap(data => this.onRolesChanged([role], AccountService.roleModifiedOperation)));
-    }
-  }
+  //updateRole(role: Role) {
+  //  if (role.id) {
+  //    return this.accountEndpoint.getUpdateRoleEndpoint(role, role.id).pipe(
+  //      tap(data => this.onRolesChanged([role], AccountService.roleModifiedOperation)));
+  //  }
+  //  else {
+  //    return this.accountEndpoint.getRoleByRoleNameEndpoint<Role>(role.name).pipe<Role>(
+  //      mergeMap(foundRole => {
+  //        role.id = foundRole.id;
+  //        return this.accountEndpoint.getUpdateRoleEndpoint(role, role.id);
+  //      }),
+  //      tap(data => this.onRolesChanged([role], AccountService.roleModifiedOperation)));
+  //  }
+  //}
 
 
   newRole(role: Role) {
@@ -162,23 +162,23 @@ export class AccountService {
   }
 
 
-  deleteRole(roleOrRoleId: string | Role): Observable<Role> {
+  //deleteRole(roleOrRoleId: string | Role): Observable<Role> {
 
-    if (typeof roleOrRoleId === 'string' || roleOrRoleId instanceof String) {
-      return this.accountEndpoint.getDeleteRoleEndpoint<Role>(<string>roleOrRoleId).pipe<Role>(
-        tap(data => this.onRolesChanged([data], AccountService.roleDeletedOperation)));
-    }
-    else {
+  //  if (typeof roleOrRoleId === 'string' || roleOrRoleId instanceof String) {
+  //    return this.accountEndpoint.getDeleteRoleEndpoint<Role>(<string>roleOrRoleId).pipe<Role>(
+  //      tap(data => this.onRolesChanged([data], AccountService.roleDeletedOperation)));
+  //  }
+  //  else {
 
-      if (roleOrRoleId.id) {
-        return this.deleteRole(roleOrRoleId.id);
-      }
-      else {
-        return this.accountEndpoint.getRoleByRoleNameEndpoint<Role>(roleOrRoleId.name).pipe<Role>(
-          mergeMap(role => this.deleteRole(role.id)));
-      }
-    }
-  }
+  //    if (roleOrRoleId.id) {
+  //      return this.deleteRole(roleOrRoleId.id);
+  //    }
+  //    else {
+  //      return this.accountEndpoint.getRoleByRoleNameEndpoint<Role>(roleOrRoleId.name).pipe<Role>(
+  //        mergeMap(role => this.deleteRole(role.id)));
+  //    }
+  //  }
+  //}
 
   getPermissions() {
 

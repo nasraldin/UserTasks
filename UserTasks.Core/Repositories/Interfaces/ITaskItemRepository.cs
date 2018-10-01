@@ -15,6 +15,12 @@ namespace UserTasks.Core.Repositories.Interfaces
 
         IEnumerable<TaskItem> GetAllTasksByUserId(int userId);
 
+        void AssignTask(int id, int userId);
+
+        void TaskDone(int id);
+
+        bool Any(int id);
+
         void DeleteTask(int id);
     }
 }

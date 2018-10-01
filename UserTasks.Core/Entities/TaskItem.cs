@@ -19,7 +19,7 @@ namespace UserTasks.Core.Entities
         public void MarkComplete()
         {
             IsDone = true;
-            Events.Add(new TaskItemCompletedEvent(this));
+            //Events.Add(new TaskItemCompletedEvent(this));
         }
     }
 }

@@ -45,6 +45,30 @@ namespace UserTasks.Core.Repositories
             return tasks;
         }
 
+        public void AssignTask(int id, int userId)
+        {
+            var task = _dbContext.TaskItems.Find(id);
+            if (task != null)
+            {
+                task.UserOwnerId = userId;
+                _dbContext.TaskItems.Update(task);
+            }
+        }
+
+        public void TaskDone(int id)
+        {
+            var task = _dbContext.TaskItems.Find(id);
+            if (task != null)
+            {
+                task.MarkComplete();
+            }
+        }
+
+        public bool Any(int id)
+        {
+            return _dbContext.TaskItems.Any(t => t.Id == id);
+        }
+
         public void DeleteTask(int id)
         {
             var task = _dbContext.TaskItems.Find(id);
