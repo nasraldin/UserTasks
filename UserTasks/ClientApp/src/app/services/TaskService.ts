@@ -20,6 +20,12 @@ export class TaskService {
       .catch(this.errorHandler);
   }
 
+  userTasks(id: number) {
+    return this.http.get(this.appUrl + "api/tasks/UserTasks/" + id)
+      .map(response => response)
+      .catch(this.errorHandler);
+  }
+
   getTaskById(id: number) {
     return this.http.get(this.appUrl + "api/tasks/" + id)
       .map(response => response)

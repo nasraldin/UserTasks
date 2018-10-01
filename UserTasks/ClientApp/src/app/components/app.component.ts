@@ -5,7 +5,6 @@ import { ToastaService, ToastaConfig, ToastOptions, ToastData } from 'ngx-toasta
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
 import { AlertService, AlertDialog, DialogType, AlertMessage, MessageSeverity } from '../services/alert.service';
-import { NotificationService } from "../services/notification.service";
 import { AppTranslationService } from "../services/app-translation.service";
 import { AccountService } from '../services/account.service';
 import { LocalStoreManager } from '../services/local-store-manager.service';
@@ -30,9 +29,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   isUserLoggedIn: boolean;
   shouldShowLoginModal: boolean;
   removePrebootScreen: boolean;
-  newNotificationCount = 0;
   appTitle = "UserTasks";
-  appLogo = require("../assets/images/logo-white.png");
+  appLogo = "";
 
   stickyToasties: number[] = [];
 
@@ -46,19 +44,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   loginControl: LoginComponent;
 
 
-  get notificationsTitle() {
-
-    let gT = (key: string) => this.translationService.getTranslation(key);
-
-    if (this.newNotificationCount)
-      return `${gT("app.Notifications")} (${this.newNotificationCount} ${gT("app.New")})`;
-    else
-      return gT("app.Notifications");
-  }
-
-
   constructor(storageManager: LocalStoreManager, private toastaService: ToastaService, private toastaConfig: ToastaConfig,
-    private accountService: AccountService, private alertService: AlertService, private notificationService: NotificationService, private appTitleService: AppTitleService,
+    private accountService: AccountService, private alertService: AlertService, private appTitleService: AppTitleService,
     private authService: AuthService, private translationService: AppTranslationService, public configurations: ConfigurationService, public router: Router) {
 
     storageManager.initialiseStorageSyncListener();
@@ -143,14 +130,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.authService.getLoginStatusEvent().subscribe(isLoggedIn => {
       this.isUserLoggedIn = isLoggedIn;
 
-
-      if (this.isUserLoggedIn) {
-        this.initNotificationsLoading();
-      }
-      else {
-        this.unsubscribeNotifications();
-      }
-
       setTimeout(() => {
         if (!this.isUserLoggedIn) {
           this.alertService.showMessage("Session Ended!", "", MessageSeverity.default);
@@ -169,54 +148,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-  ngOnDestroy() {
-    this.unsubscribeNotifications();
-  }
-
-
-  private unsubscribeNotifications() {
-    if (this.notificationsLoadingSubscription)
-      this.notificationsLoadingSubscription.unsubscribe();
-  }
-
-  initNotificationsLoading() {
-
-    this.notificationsLoadingSubscription = this.notificationService.getNewNotificationsPeriodically()
-      .subscribe(notifications => {
-        this.dataLoadingConsecutiveFailurs = 0;
-        this.newNotificationCount = notifications.filter(n => !n.isRead).length;
-      },
-        error => {
-          this.alertService.logError(error);
-
-          if (this.dataLoadingConsecutiveFailurs++ < 20)
-            setTimeout(() => this.initNotificationsLoading(), 5000);
-          else
-            this.alertService.showStickyMessage("Load Error", "Loading new notifications from the server failed!", MessageSeverity.error);
-        });
-  }
-
-  markNotificationsAsRead() {
-
-    let recentNotifications = this.notificationService.recentNotifications;
-
-    if (recentNotifications.length) {
-      this.notificationService.readUnreadNotification(recentNotifications.map(n => n.id), true)
-        .subscribe(response => {
-          for (let n of recentNotifications) {
-            n.isRead = true;
-          }
-
-          this.newNotificationCount = recentNotifications.filter(n => !n.isRead).length;
-        },
-          error => {
-            this.alertService.logError(error);
-            this.alertService.showMessage("Notification Error", "Marking read notifications failed", MessageSeverity.error);
-
-          });
-    }
-  }
 
   showDialog(dialog: AlertDialog) {
 

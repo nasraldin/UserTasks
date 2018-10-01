@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from "../components/app.component";
 import { LoginComponent } from "../components/login/login.component";
-import { NotificationsViewerComponent } from "../components/controls/notifications-viewer.component";
 
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -23,8 +22,6 @@ import { ConfigurationService } from '../services/configuration.service';
 import { AlertService } from '../services/alert.service';
 import { LocalStoreManager } from '../services/local-store-manager.service';
 import { EndpointFactory } from '../services/endpoint-factory.service';
-import { NotificationService } from '../services/notification.service';
-import { NotificationEndpoint } from '../services/notification-endpoint.service';
 import { AccountService } from '../services/account.service';
 import { AccountEndpoint } from '../services/account-endpoint.service';
 
@@ -50,7 +47,6 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         LoginComponent,
-        NotificationsViewerComponent
       ],
       providers: [
         AuthService,
@@ -58,8 +54,6 @@ describe('AppComponent', () => {
         ConfigurationService,
         AppTitleService,
         AppTranslationService,
-        NotificationService,
-        NotificationEndpoint,
         AccountService,
         AccountEndpoint,
         LocalStoreManager,

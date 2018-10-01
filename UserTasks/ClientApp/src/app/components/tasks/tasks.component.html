@@ -1,7 +1,21 @@
-<div class="container">
-  <header class="pageHeader">
-    <h3><i class="fa fa-tasks fa-lg page-caption" aria-hidden="true"></i> Tasks</h3>
-  </header>
-  <div [@fadeInOut]>
-  </div>
+<p *ngIf="!taskItems" style="margin-top: 10rem;"><em>Tasks is loading...</em></p>
+
+<div class="list-group" style="margin-top: 10rem;">
+  <ul>
+    <li class="list-group-item active">
+      Task items list
+    </li>
+    <li *ngIf="!taskItems" class="list-group-item" style="color: red">
+      No Tasks
+    </li>
+    <li class="list-group-item adhovr {{task.isDone ? 'completed' : '' }}" *ngFor="let task of taskItems">
+      <i *ngIf="task.isDone" class="glyphicon glyphicon-ok-sign" style="color: green"></i> {{ task.task }}
+
+      <span class="floatright">
+        <a [routerLink]="" (click)="delete(task.id)" title="Delete" class="mrgrt" style="color: red">
+          <i class="glyphicon glyphicon-trash"></i>
+        </a>
+      </span>
+    </li>
+  </ul>
 </div>

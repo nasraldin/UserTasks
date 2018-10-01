@@ -24,8 +24,6 @@ import { ConfigurationService } from './services/configuration.service';
 import { AlertService } from './services/alert.service';
 import { LocalStoreManager } from './services/local-store-manager.service';
 import { EndpointFactory } from './services/endpoint-factory.service';
-import { NotificationService } from './services/notification.service';
-import { NotificationEndpoint } from './services/notification-endpoint.service';
 import { AccountService } from './services/account.service';
 import { AccountEndpoint } from './services/account-endpoint.service';
 
@@ -43,9 +41,6 @@ import { LoginComponent } from "./components/login/login.component";
 import { HomeComponent } from "./components/home/home.component";
 import { AboutComponent } from "./components/about/about.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
-
-import { NotificationsViewerComponent } from "./components/controls/notifications-viewer.component";
-import { SearchBoxComponent } from "./components/controls/search-box.component";
 
 import { TasksComponent } from "./components/tasks/tasks.component";
 
@@ -80,8 +75,6 @@ import { TasksComponent } from "./components/tasks/tasks.component";
     HomeComponent,
     AboutComponent,
     NotFoundComponent,
-    NotificationsViewerComponent,
-    SearchBoxComponent,
     EqualValidator,
     LastElementDirective,
     AutofocusDirective,
@@ -98,8 +91,6 @@ import { TasksComponent } from "./components/tasks/tasks.component";
     ConfigurationService,
     AppTitleService,
     AppTranslationService,
-    NotificationService,
-    NotificationEndpoint,
     AccountService,
     AccountEndpoint,
     LocalStoreManager,

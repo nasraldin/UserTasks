@@ -7,6 +7,8 @@ import { error } from "util";
 import { OnInit, OnDestroy, Input, TemplateRef, ViewChild } from "@angular/core";
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { AlertService, MessageSeverity, DialogType } from "../../services/alert.service";
+import { Router } from '@angular/router';
+import { NgForm, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: "home",
@@ -20,30 +22,43 @@ export class HomeComponent {
   _currentUserId: number;
   formResetToggle: boolean = true;
   taskEdit = {};
+  addTaskForm= [];
+  errorMessage: any;
 
-  constructor(public configurations: ConfigurationService, private alertService: AlertService, private taskService: TaskService, private authService: AuthService) {
+
+  constructor(public configurations: ConfigurationService, private router: Router, private alertService: AlertService, private taskService: TaskService, private authService: AuthService) {
     this.currentUserId();
+
+    if (this._currentUserId === 1) {
+      this.router.navigateByUrl('tasks');
+    }
+
     this.getTasks();
   }
 
   currentUserId() {
     if (this.authService.currentUser)
       this._currentUserId = Number(this.authService.currentUser.id);
-
     return this._currentUserId;
   }
 
   getTasks() {
-    this.taskService.getTasks().subscribe(
-      data => this.taskItems = data.filter(task => task.userOwnerId === this._currentUserId)
+    this.taskService.userTasks(this._currentUserId).subscribe(
+      data => this.taskItems = data as ITaskData[]
     );
   }
 
+  //getTasks() {
+  //  this.taskService.getTasks().subscribe(
+  //    data => this.taskItems = data.filter(task => task.userOwnerId === this._currentUserId)
+  //  );
+  //}
+
   getTask(taskId) {
     this.taskService.getTaskById(taskId).subscribe((data) => {
-        this.getTasks();
-        alert(data);
-      },
+      this.getTasks();
+      alert(data);
+    },
       error => console.error(error));
   }
 
@@ -67,8 +82,8 @@ export class HomeComponent {
     const ans = confirm("Do you want to delete task: " + taskId);
     if (ans) {
       this.taskService.deleteTasksItem(taskId).subscribe((data) => {
-          this.getTasks();
-        },
+        this.getTasks();
+      },
         //error => {
         //  if (error => error.status == 404)
         //    alert("Not Found");
@@ -89,6 +104,16 @@ export class HomeComponent {
       this.taskEdit = {};
       this.editorModal.show();
     });
+  }
+
+  save() {
+
+    this.taskService.saveTask(this.taskEdit)
+      .subscribe((data) => {
+        this.getTasks();
+        this.editorModal.hide();
+      },
+        error => this.errorMessage = error);
   }
 
   showErrorAlert(caption: string, message: string) {

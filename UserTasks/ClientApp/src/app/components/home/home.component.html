@@ -1,41 +1,51 @@
 <p *ngIf="!taskItems" style="margin-top: 10rem;"><em>Tasks is loading...</em></p>
 
+<div class="list-group" style="margin-top: 10rem;">
+  <ul>
+    <li class="list-group-item active">
+      Task items list
+      <span class="floatright">
+        <a href="javascript:;" (click)="addTask()" style="color: white;"><i class="fa fa-plus"></i> Add Task</a>
+      </span>
+    </li>
+    <li *ngIf="!taskItems" class="list-group-item" style="color: red">
+      No Tasks
+    </li>
+    <li class="list-group-item adhovr {{task.isDone ? 'completed' : '' }}" *ngFor="let task of taskItems">
+      <i *ngIf="task.isDone" class="glyphicon glyphicon-ok-sign" style="color: green"></i> {{ task.task }}
 
-<a href="javascript:;" (click)="addTask()"><i class="fa fa-plus"></i> Add Task</a>
-
-<table class='table' *ngIf="taskItems" style="margin-top: 10rem;">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Task</th>
-      <th>Task Done</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let task of taskItems">
-      <td>{{ task.id }}</td>
-      <td class="{{task.isDone ? 'completed' : '' }}">{{ task.task }}</td>
-      <td>{{ task.isDone }}</td>
-      <td>
-        <a *ngIf="!task.isDone" [routerLink]="" (click)="taskDone(task.id)">Done</a> |
-        <a [routerLink]="" (click)="delete(task.id)">Delete</a> |
-        <a [routerLink]="" (click)="assignTask(task.id, 1)">Assign Task</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      <span class="floatright">
+        <a *ngIf="!task.isDone" [routerLink]="" (click)="taskDone(task.id)" title="Done" class="mrgrt" style="color: green">
+          <i class="glyphicon glyphicon-ok"></i>
+        </a>
+        <a [routerLink]="" (click)="delete(task.id)" title="Delete" class="mrgrt" style="color: red">
+          <i class="glyphicon glyphicon-trash"></i>
+        </a>
+        <a *ngIf="!task.isDone" [routerLink]="" (click)="assignTask(task.id, 1)" title="Assign Task to another user" class="mrgrt">
+          <i class="glyphicon glyphicon-user"></i>
+        </a>
+      </span>
+    </li>
+  </ul>
+</div>
 
 <div class="modal fade" bsModal #editorModal="bs-modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left"><i class="fa fa-tasks"></i> {{'todoDemo.editor.NewTask' | translate}}</h4>
+        <h4 class="modal-title pull-left">
+          <i class="fa fa-tasks"></i>
+          {{'todoDemo.editor.NewTask' | translate}}
+        </h4>
         <button type="button" class="close pull-right" title="Close" (click)="editorModal.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form *ngIf="formResetToggle" class="form-horizontal" name="taskEditorForm" #f="ngForm" novalidate
+        <form *ngIf="formResetToggle"
+              class="form-horizontal"
+              name="taskEditorForm"
+              #f="ngForm" novalidate
               (ngSubmit)="f.form.valid ? save() :
                       (!task.valid && showErrorAlert('Task name is required', 'Please enter a name for the task'));">
 
@@ -49,27 +59,20 @@
               </span>
             </div>
           </div>
-
-
-          <label class="control-label col-md-2"> </label>
-          <div class="col-md-7">
-            <div class="checkbox">
-              <label>
-                <input name="isDone" type="checkbox" [(ngModel)]="taskEdit.done">
-                Done
-              </label>
+          <div class="form-group">
+            <div class="col-md-7 col-md-offset-2">
+              <div class="checkbox">
+                <label>
+                  <input name="isDone" type="checkbox" [(ngModel)]="taskEdit.done">
+                  Done
+                </label>
+              </div>
             </div>
           </div>
-          <div class="col-md-12">
-            <hr class="edit-last-separator-hr" />
+          
+          <div class="modal-footer actionBtn-form-group">
+            <button type="submit" class="btn btn-primary">Add Task</button>
           </div>
-
-          <div class="form-group actionBtn-form-group">
-            <div class="pull-right">
-              <button type="submit" class="btn btn-primary">Add Task</button>
-            </div>
-          </div>
-          <div class="clearfix"></div>
         </form>
       </div>
     </div>

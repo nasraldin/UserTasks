@@ -43,6 +43,25 @@ namespace UserTasks.Controllers
             return Ok(Mapper.Map<IEnumerable<TaskItemViewModel>>(taskItems));
         }
 
+        [HttpGet("[action]")]
+        [Route("api/Tasks/UserTasks/{id}")]
+        public IActionResult UserTasks([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var taskItems = _unitOfWork.TaskItems.GetAllTasksByUserId(id);
+
+            if (taskItems == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Mapper.Map<IEnumerable<TaskItemViewModel>>(taskItems));
+        }
+
         //// GET: api/TaskItems/5
         //[HttpGet("{id}")]
         //public IActionResult Get([FromRoute] int id)

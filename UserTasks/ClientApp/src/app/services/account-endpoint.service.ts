@@ -30,15 +30,11 @@ export class AccountEndpoint extends EndpointFactory {
   get roleByRoleNameUrl() { return this.configurations.baseUrl + this._roleByRoleNameUrl; }
   get permissionsUrl() { return this.configurations.baseUrl + this._permissionsUrl; }
 
-
-
   constructor(http: HttpClient, configurations: ConfigurationService, injector: Injector) {
 
     super(http, configurations, injector);
   }
-
-
-
+  
 
   getUserEndpoint<T>(userId?: string): Observable<T> {
     let endpointUrl = userId ? `${this.usersUrl}/${userId}` : this.currentUserUrl;
