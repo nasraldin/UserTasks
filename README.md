@@ -4,10 +4,13 @@ Test Application for ELM
 Demo
 https://usertasks20181002113707.azurewebsites.net
 
-ASP.Net Core 2.1
-Entity Framework Core
-Angular 6
-SQL Server
+- ASP.Net Core 2.1
+
+- Entity Framework Core
+
+- Angular 6
+
+- SQL Server
 
 application core archiater (project: UserTasks.Core)
 
