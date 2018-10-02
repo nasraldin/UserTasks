@@ -8,6 +8,7 @@ import { OnInit, OnDestroy, Input, TemplateRef, ViewChild } from "@angular/core"
 import { ModalDirective } from "ngx-bootstrap/modal";
 import { AlertService, MessageSeverity, DialogType } from "../../services/alert.service";
 import { Router } from '@angular/router';
+import { ITaskData } from "../../models/ITaskData";
 
 
 @Component({
@@ -42,11 +43,4 @@ export class TasksComponent {
       data => this.taskItems = data as ITaskData[]
     );
   }
-}
-
-interface ITaskData {
-  id: number;
-  task: string;
-  isDone: boolean;
-  userOwnerId: number;
 }

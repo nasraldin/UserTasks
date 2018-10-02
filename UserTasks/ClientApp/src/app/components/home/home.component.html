@@ -42,11 +42,23 @@
         </button>
       </div>
       <div class="modal-body">
-        <form *ngIf="formResetToggle"
-              class="form-horizontal"
-              name="taskEditorForm"
-              #f="ngForm" novalidate
-              (ngSubmit)="f.form.valid ? save() :
+        <form [formGroup]="complexForm" (ngSubmit)="addNewTask(complexForm.value)">
+          <div class="form-group">
+            <label for=""><b>Task</b></label>
+            <input type="text" class="form-control" [formControl]="complexForm.controls['task']" />
+            <div *ngIf="complexForm.controls['task'].hasError('required')" class="has-error">
+              field required</div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" [disabled]="!complexForm.valid">Save Task</button>
+          </div>
+        </form>
+        <!--<form *ngIf="formResetToggle"
+                  class="form-horizontal"
+                  name="taskEditorForm"
+                  #f="ngForm" novalidate
+                  (ngSubmit)="f.form.valid ? save() :
                       (!task.valid && showErrorAlert('Task name is required', 'Please enter a name for the task'));">
 
           <div class="form-group has-feedback">
@@ -73,7 +85,7 @@
           <div class="modal-footer actionBtn-form-group">
             <button type="submit" class="btn btn-primary">Add Task</button>
           </div>
-        </form>
+        </form>-->
       </div>
     </div>
   </div>

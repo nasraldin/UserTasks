@@ -24,9 +24,10 @@ export class HomeComponent {
   taskEdit = {};
   addTaskForm= [];
   errorMessage: any;
+  complexForm: FormGroup;
 
 
-  constructor(public configurations: ConfigurationService, private router: Router, private alertService: AlertService, private taskService: TaskService, private authService: AuthService) {
+  constructor(public configurations: ConfigurationService, private router: Router, private alertService: AlertService, private taskService: TaskService, private authService: AuthService, fb: FormBuilder) {
     this.currentUserId();
 
     if (this._currentUserId === 1) {
@@ -34,6 +35,20 @@ export class HomeComponent {
     }
 
     this.getTasks();
+
+    this.complexForm = fb.group({
+      'task': [null, Validators.required],
+      'userOwnerId': this._currentUserId,
+    });
+  }
+
+  addNewTask(model: ITaskData) {
+    this.taskService.saveTask(model).subscribe((data) => {
+        this.getTasks();
+      this.editorModal.hide();
+      this.showSuccessAlert('','added new task item successfully');
+      },
+      error => this.errorMessage = error);
   }
 
   currentUserId() {
@@ -65,7 +80,7 @@ export class HomeComponent {
   assignTask(id, userId) {
     this.taskService.assignTask(id, userId).subscribe((data) => {
       this.getTasks();
-      alert(data);
+      this.showSuccessAlert('', 'task is assigned!');
     },
       error => console.error(error));
   }
@@ -73,7 +88,7 @@ export class HomeComponent {
   taskDone(id) {
     this.taskService.taskDone(id).subscribe((data) => {
       this.getTasks();
-      alert(data);
+        this.showSuccessAlert('', 'task is Done!');
     },
       error => console.error(error));
   }
@@ -83,6 +98,7 @@ export class HomeComponent {
     if (ans) {
       this.taskService.deleteTasksItem(taskId).subscribe((data) => {
         this.getTasks();
+          this.showSuccessAlert('', 'task is deleted!');
       },
         //error => {
         //  if (error => error.status == 404)
@@ -118,6 +134,10 @@ export class HomeComponent {
 
   showErrorAlert(caption: string, message: string) {
     this.alertService.showMessage(caption, message, MessageSeverity.error);
+  }
+
+  showSuccessAlert(caption: string, message: string) {
+    this.alertService.showMessage(caption, message, MessageSeverity.success);
   }
 
 }
