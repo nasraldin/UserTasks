@@ -5,6 +5,7 @@ Demo
 https://usertasks20181002113707.azurewebsites.net
 
 application core archiater (project: UserTasks.Core)
+
 • Clean Architecture + implement some future of DDD
 
 • Repository Pattern
