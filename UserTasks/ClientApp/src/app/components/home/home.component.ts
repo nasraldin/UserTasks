@@ -3,12 +3,12 @@ import { Component, Inject } from "@angular/core";
 import { ConfigurationService } from "../../services/configuration.service";
 import { TaskService } from "../../services/TaskService";
 import { AuthService } from "../../services/auth.service";
-import { error } from "util";
-import { OnInit, OnDestroy, Input, TemplateRef, ViewChild } from "@angular/core";
+import { ViewChild } from "@angular/core";
 import { ModalDirective } from "ngx-bootstrap/modal";
-import { AlertService, MessageSeverity, DialogType } from "../../services/alert.service";
+import { AlertService, MessageSeverity } from "../../services/alert.service";
+import { ITaskData } from "../../models/ITaskData";
 import { Router } from '@angular/router';
-import { NgForm, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: "home",
@@ -20,14 +20,12 @@ export class HomeComponent {
 
   public taskItems: ITaskData[];
   _currentUserId: number;
-  formResetToggle: boolean = true;
-  taskEdit = {};
-  addTaskForm= [];
-  errorMessage: any;
   complexForm: FormGroup;
+  complexForm2: FormGroup;
+  formResetToggle: boolean = true;
 
+  constructor(public configurations: ConfigurationService, private router: Router, private alertService: AlertService, private taskService: TaskService, private authService: AuthService, private fb: FormBuilder) {
 
-  constructor(public configurations: ConfigurationService, private router: Router, private alertService: AlertService, private taskService: TaskService, private authService: AuthService, fb: FormBuilder) {
     this.currentUserId();
 
     if (this._currentUserId === 1) {
@@ -40,15 +38,11 @@ export class HomeComponent {
       'task': [null, Validators.required],
       'userOwnerId': this._currentUserId,
     });
-  }
 
-  addNewTask(model: ITaskData) {
-    this.taskService.saveTask(model).subscribe((data) => {
-        this.getTasks();
-      this.editorModal.hide();
-      this.showSuccessAlert('','added new task item successfully');
-      },
-      error => this.errorMessage = error);
+    this.complexForm2 = fb.group({
+      'taskId': [null, Validators.required],
+      'userOwnerId': [null, Validators.required],
+    });
   }
 
   currentUserId() {
@@ -63,18 +57,41 @@ export class HomeComponent {
     );
   }
 
-  //getTasks() {
-  //  this.taskService.getTasks().subscribe(
-  //    data => this.taskItems = data.filter(task => task.userOwnerId === this._currentUserId)
-  //  );
-  //}
+  addTask() {
+    this.formResetToggle = false;
 
-  getTask(taskId) {
-    this.taskService.getTaskById(taskId).subscribe((data) => {
+    setTimeout(() => {
+      this.formResetToggle = true;
+
+      this.complexForm = this.fb.group({
+        'task': [null, Validators.required],
+        'userOwnerId': this._currentUserId,
+      });
+
+      this.editorModal.show();
+    });
+  }
+
+  assignNTask() {
+    this.formResetToggle = false;
+    setTimeout(() => {
+      this.formResetToggle = true;
+      //this.complexForm2 = this.fb.group({
+      //  'taskId': [null, Validators.required],
+      //  'userOwnerId': [null, Validators.required],
+      //});
+      this.assignTaskModal.show();
+    });
+  }
+
+
+  addNewTask(model: ITaskData) {
+    this.taskService.saveTask(model).subscribe((data) => {
       this.getTasks();
-      alert(data);
+      this.editorModal.hide();
+      this.showSuccessAlert('', 'added new task item successfully');
     },
-      error => console.error(error));
+      error => this.showErrorAlert('', error));
   }
 
   assignTask(id, userId) {
@@ -82,15 +99,15 @@ export class HomeComponent {
       this.getTasks();
       this.showSuccessAlert('', 'task is assigned!');
     },
-      error => console.error(error));
+      error => this.showErrorAlert('', error));
   }
 
   taskDone(id) {
     this.taskService.taskDone(id).subscribe((data) => {
       this.getTasks();
-        this.showSuccessAlert('', 'task is Done!');
+      this.showSuccessAlert('', 'task is Done!');
     },
-      error => console.error(error));
+      error => this.showErrorAlert('', error));
   }
 
   delete(taskId) {
@@ -98,39 +115,17 @@ export class HomeComponent {
     if (ans) {
       this.taskService.deleteTasksItem(taskId).subscribe((data) => {
         this.getTasks();
-          this.showSuccessAlert('', 'task is deleted!');
+        this.showSuccessAlert('', 'task is deleted!');
       },
-        //error => {
-        //  if (error => error.status == 404)
-        //    alert("Not Found");
-        //}
-        error => console.error(error));
+        error => this.showErrorAlert('', error));
     }
   }
 
   @ViewChild("editorModal")
   editorModal: ModalDirective;
 
-  addTask() {
-    this.formResetToggle = false;
-
-    setTimeout(() => {
-      this.formResetToggle = true;
-
-      this.taskEdit = {};
-      this.editorModal.show();
-    });
-  }
-
-  save() {
-
-    this.taskService.saveTask(this.taskEdit)
-      .subscribe((data) => {
-        this.getTasks();
-        this.editorModal.hide();
-      },
-        error => this.errorMessage = error);
-  }
+  @ViewChild("assignTaskModal")
+  assignTaskModal: ModalDirective;
 
   showErrorAlert(caption: string, message: string) {
     this.alertService.showMessage(caption, message, MessageSeverity.error);
@@ -140,11 +135,4 @@ export class HomeComponent {
     this.alertService.showMessage(caption, message, MessageSeverity.success);
   }
 
-}
-
-interface ITaskData {
-  id: number;
-  task: string;
-  isDone: boolean;
-  userOwnerId: number;
 }

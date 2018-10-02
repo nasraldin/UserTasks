@@ -21,7 +21,7 @@
         <a [routerLink]="" (click)="delete(task.id)" title="Delete" class="mrgrt" style="color: red">
           <i class="glyphicon glyphicon-trash"></i>
         </a>
-        <a *ngIf="!task.isDone" [routerLink]="" (click)="assignTask(task.id, 1)" title="Assign Task to another user" class="mrgrt">
+        <a *ngIf="!task.isDone" href="javascript:;" (click)="assignNTask()" title="Assign Task to another user" class="mrgrt">
           <i class="glyphicon glyphicon-user"></i>
         </a>
       </span>
@@ -41,52 +41,47 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form [formGroup]="complexForm" (ngSubmit)="addNewTask(complexForm.value)">
+      <form [formGroup]="complexForm" (ngSubmit)="addNewTask(complexForm.value)">
+        <div class="modal-body" style="padding-bottom: 6rem;">
           <div class="form-group">
-            <label for=""><b>Task</b></label>
-            <input type="text" class="form-control" [formControl]="complexForm.controls['task']" />
-            <div *ngIf="complexForm.controls['task'].hasError('required')" class="has-error">
-              field required</div>
-          </div>
-
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary" [disabled]="!complexForm.valid">Save Task</button>
-          </div>
-        </form>
-        <!--<form *ngIf="formResetToggle"
-                  class="form-horizontal"
-                  name="taskEditorForm"
-                  #f="ngForm" novalidate
-                  (ngSubmit)="f.form.valid ? save() :
-                      (!task.valid && showErrorAlert('Task name is required', 'Please enter a name for the task'));">
-
-          <div class="form-group has-feedback">
-            <label class="control-label col-md-2" for="task">Task:</label>
-            <div class="col-md-10" [ngClass]="{'has-success': f.submitted && task.valid, 'has-error' : f.submitted && !task.valid}">
-              <input autofocus type="text" id="task" name="task" placeholder="Enter task name" class="form-control" [(ngModel)]="taskEdit.name" #task="ngModel" required />
-              <span *ngIf="f.submitted" class="glyphicon form-control-feedback" [ngClass]="{'glyphicon-ok ':task.valid, 'glyphicon-remove' : !task.valid}"></span>
-              <span *ngIf="f.submitted && !task.valid" class="errorMessage">
-                task required
-              </span>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-7 col-md-offset-2">
-              <div class="checkbox">
-                <label>
-                  <input name="isDone" type="checkbox" [(ngModel)]="taskEdit.done">
-                  Done
-                </label>
+            <label class="control-label col-md-2" for="task"><b>Task</b></label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" [formControl]="complexForm.controls['task']" placeholder="Enter task" />
+              <div *ngIf="complexForm.controls['task'].hasError('required')" class="errorMessage">
+                task input required
               </div>
             </div>
           </div>
-          
-          <div class="modal-footer actionBtn-form-group">
-            <button type="submit" class="btn btn-primary">Add Task</button>
-          </div>
-        </form>-->
+        </div>
+        <div class="modal-footer actionBtn-form-group">
+          <button type="submit" class="btn btn-primary" [disabled]="!complexForm.valid">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" bsModal #assignTaskModal="bs-modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">
+          <i class="fa fa-tasks"></i>
+          Assign task to user
+        </h4>
+        <button type="button" class="close pull-right" title="Close" (click)="assignTaskModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <form>
+        <div class="modal-body" style="padding-bottom: 6rem;">
+
+        </div>
+        <div class="modal-footer actionBtn-form-group">
+          <button type="submit" class="btn btn-primary" [disabled]="!complexForm.valid">Save</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
