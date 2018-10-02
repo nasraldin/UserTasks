@@ -6,10 +6,15 @@ https://usertasks20181002113707.azurewebsites.net
 
 application core archiater (project: UserTasks.Core)
 • Clean Architecture + implement some future of DDD
+
 • Repository Pattern
+
 • Unit of Work
+
 • implement Identity core and Openiddict for authorization and authentication
+
 • Seeding initial data by using Code First approach
+
 • Logging and Exception Handling
 
 Application Features
